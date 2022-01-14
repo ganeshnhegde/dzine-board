@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" class="draw">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Dzine Hall</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<headr>
+		<nav class="menu-draw">
+
+			<ul>
+				<li class="brush-properties-container">
+					<div class="brush-properties">
+						<div class="color-preview">
+							<input type="color" id="color-selector" title="Change brush color"/>
+						</div>
+           
+						<a href="#" class="btn-nav brush-size" ondragstart="return false;">
+							<span class="size-value" title="Change brush size">20px</span> <span>&#8597;</span>
+							<div class="brush-size-menu">
+								<ui-slider id="size-slider-mobile" class="size-slider" data-text="Size:" data-min="1" data-max="200" data-unit="px"></ui-slider>
+							</div>
+						</a>
+
+						<ui-slider id="size-slider-main" class="size-slider" data-text="Size:" data-min="1" data-max="200" data-unit="px"></ui-slider>
+					</div>
+					<div class="sticky">
+						<i class="fas fa-sticky-note"></i>
+					</div>
+				</li>
+
+				<li class="room">
+					<a href="#" id="room-url" title="Copy link to clipboard" data-clipboard="">
+						<span class="url-container">
+							<span>Connecting...</span>
+						</span>
+						<i class="fas fa-copy url-icon"></i>
+					</a>
+				</li>
+
+				<li class="options-container">
+					<div><a href="#" class="btn-nav" title="Save image to disk" id="save" download="canvas.png"><i class="fas fa-download"></i> <span class="responsive-icon-text">download</span></a></div>
+
+					<div><a href="#" class="btn-nav" title="Settings" id="settings"><i class="fas fa-cog"></i> <span class="responsive-icon-text">Settings</span></a>
+						<div class="options-panel">
+							<label><i class="fas fa-user"></i> user name</label>
+							<input type="text" maxlength="30"/>
+
+							<div class="admin-settings hidden" id="admin-settings">
+								<span><i class="fas fa-expand"></i> canvas size</span>
+								<div class="canvas-size">
+									<input id="canvas-width" min="0" max="1000" type="number"/>
+									<input id="canvas-height" min="0" max="1000" type="number"/>
+								</div>
+
+								<button class="btn" id="canvas-size-apply" disabled>Apply</button>
+							</div>
+						</div>
+					</div>
+					<div><a href="#" class="btn-nav" onclick="hello()"><i class="fas fa-times" id="close"></i></a>
+						<a href="" class="btn-nav" onclick="open()"><i class="fas fa-bars" id="open" style="display:none"> </i> </a>
+						</div>
+				</li>
+			</ul>
+		</nav>
+	</headr>
+		
+	
+	<main>
+ 
+		
+		<div class="canvas-layers">
+			
+			<canvas id="bgCanvas" oncontextmenu="return false;"></canvas>
+			<canvas id="drawArea" oncontextmenu="return false;"></canvas>
+			<canvas id="shapePreview" oncontextmenu="return false;"></canvas>
+			<div class="text-cursor hidden"></div>
+		</div>
+		<ui-toolbar id="toolbar" style="background-color: aqua;width: 125px;display: block;"></ui-toolbar>
+
+		<%= require('html-loader!./js/components/background-modal/background-modal.html') %>
+	</main>
+
+	<script>
+		function hello(){
+			var link = document.getElementById('toolbar');
+			var close = document.getElementById('close');
+			var open = document.getElementById('open');
+			link.style.display =  'none' ;
+			close.style.display = 'none'   ;
+			open.style.display = 'contents';
+			
+		}
+
+		function open(){
+			var link = document.getElementById('toolbar');
+			var close = document.getElementById('close');
+			var open = document.getElementById('open');
+			link.style.display =  'block' ;
+			close.style.display = 'Contents'   ;
+			open.style.display = 'none';
+			
+		}
+	</script>
+</body>
+</html>
